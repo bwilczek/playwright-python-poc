@@ -1,29 +1,29 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect, Locator
 
 class GreetingPage:
-    def __init__(self, page):
+    def __init__(self, page: Page):
         self.page = page
         self.name_input = page.locator('#name')
         self.set_name_button = page.locator('#set_name')
         self.greeting_text = page.locator('#greeting')
 
-    def navigate(self):
+    def navigate(self) -> None:
         self.page.goto("https://bwilczek.github.io/watir_pump_tutorial/greeter.html")
 
-    def greet(self, name):
+    def greet(self, name: str) -> None:
         self.name_input.fill(name)
         self.set_name_button.click()
 
 class ToDoListComponent:
-    def __init__(self, root):
+    def __init__(self, root: Locator):
         self.root = root
         self.title = self.root.locator("xpath=./*[@role='title']")
 
 class MultiToDoListPage:
-    def __init__(self, page):
+    def __init__(self, page: Page):
         self.page = page
 
-    def navigate(self):
+    def navigate(self) -> None:
         self.page.goto("https://bwilczek.github.io/watir_pump_tutorial/todo_lists.html")
 
     @property
