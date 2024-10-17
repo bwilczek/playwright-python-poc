@@ -17,7 +17,7 @@ class GreetingPage:
 class ToDoListComponent:
     def __init__(self, root):
         self.root = root
-        self.title = self.root.locator("xpath=//*[@role='title']")
+        self.title = self.root.locator("xpath=./*[@role='title']")
 
 class MultiToDoListPage:
     def __init__(self, page):
@@ -26,8 +26,10 @@ class MultiToDoListPage:
     def navigate(self):
         self.page.goto("https://bwilczek.github.io/watir_pump_tutorial/todo_lists.html")
 
+    @property
     def lists(self):
-        return [ ToDoListComponent(list) for list in self.page.locator("xpath=//*[@role='todo_list']").all() ]
+        locators_list = [ ToDoListComponent(list) for list in self.page.locator("xpath=//*[@role='todo_list']").all() ]
+        return { list.title.text_content() : list for list in locators_list }
 
 def test_has_title(page: Page):
     app = GreetingPage(page)
@@ -40,4 +42,4 @@ def test_multi_todo_lists(page: Page):
     app = MultiToDoListPage(page)
     app.navigate()
 
-    expect(app.lists()[0].title).to_contain_text ("Home")
+    expect(app.lists["Home"].title).to_contain_text ("Home")
