@@ -21,7 +21,7 @@ class ToDoListItemComponent:
         self.name = self.root.locator("xpath=./*[@role='name']")
         self.remove_button = self.root.locator("xpath=./*[@role='rm']")
 
-    def remove(self):
+    def remove(self) -> None:
         self.remove_button.click()
 
 
@@ -33,15 +33,15 @@ class ToDoListComponent:
         self.new_item_input = self.root.locator("xpath=./*[@role='new_item']")
 
     @property
-    def items(self):
+    def items(self) -> dict[str: ToDoListItemComponent]:
         items_list = [ ToDoListItemComponent(list) for list in self.root.get_by_role("listitem").all() ]
         return { item.name.text_content() : item for item in items_list }
 
     @property
-    def items_as_text(self):
+    def items_as_text(self) -> [str]:
         return self.items.keys()
 
-    def add_item(self, item: str):
+    def add_item(self, item: str) -> None:
         self.new_item_input.fill(item)
         self.add_button.click()
 
@@ -53,7 +53,7 @@ class MultiToDoListPage:
         self.page.goto("https://bwilczek.github.io/watir_pump_tutorial/todo_lists.html")
 
     @property
-    def lists(self):
+    def lists(self) -> dict[str: ToDoListComponent]:
         locators_list = [ ToDoListComponent(list) for list in self.page.locator("xpath=//*[@role='todo_list']").all() ]
         return { list.title.text_content() : list for list in locators_list }
 
