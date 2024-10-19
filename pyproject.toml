@@ -15,7 +15,98 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
-src = ["tests"]
+target-version = "py312"
+line-length = 120
+fix = true
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.ruff.format]
+preview = true
+
+[tool.ruff.lint]
+# Rules catalog: https://docs.astral.sh/ruff/rules/
+select = [
+    "YTT",  # flake8-2020
+    "ASYNC",# flake8-async
+    "ANN",  # flake8-annotations
+    "S",    # flake8-bandit
+    "BLE",  # flake8-blind-except
+    "FBT",  # flake8-boolean-trap
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "COM",  # flake8-commas
+    "C4",   # flake8-comprehensions
+    "DTZ",  # flake8-datetimez
+    "T10",  # flake8-debugger
+    "ICN",  # flake8-import-conventions
+    "LOG",  # flake8-logging
+    "G",    # flake8-logging-format
+    "INP",  # flake8-no-pep420
+    "PIE",  # flake8-pie
+    "PT",   # flake8-pytest-style
+    "Q",    # flake8-quotes
+    "RSE",  # flake8-raise
+    "RET",  # flake8-return
+    "T20",  # flake8-print
+    "SLF",  # flake8-self
+    "SLOT", # flake8-slots
+    "SIM",  # flake8-simplify
+    "TID",  # flake8-tidy-imports
+    "TRIO", # flake8-trio
+    "TCH",  # flake8-type-checking
+    "INT",  # flake8-gettext
+    "ARG",  # flake8-unused-arguments
+    "PTH",  # flake8-use-pathlib
+    "TD",   # flake8-todos
+    "FIX",  # flake8-fixme
+    "FLY",  # flynt
+    "I",    # isort
+    "C90",  # mccabe
+    "N",    # pep8-naming
+    "PERF", # perflint
+    "E",    # pycodestyle
+    "W",    # pycodestyle
+    "F",    # pyflakes
+    "PGH",  # pygrep-hooks
+    "PLC",  # pylint convention
+    "PLE",  # pylint error
+    "PLR",  # pylint refactor
+    "PLW",  # pylint warning
+    "UP",   # pyupgrade
+    "RUF",  # ruff
+    "TRY",  # tryceratops
+    "D",    # flake8-docstrings
+]
+ignore = [
+    "E501",     # LineTooLong
+    "E731",     # DoNotAssignLambda
+    "RET504",   # unnecessary-assign
+    "RET505",   # superfluous-else-return
+    "BLE001",   # blind-except
+    "COM812",   # missing-trailing-comma (conflicts with formatter)
+    "TRY300",   # try-consider-else
+    "ANN101",   # missing-type-self
+    "ANN102",   # missing-type-cls
+    "ANN204",   # missing-return-type-special-method (TODO)
+    "TD002",    # missing-todo-author
+    "FIX002",   # line-contains-todo
+    "D100",     # Missing docstring in public module
+    "D101",     # Missing docstring in public class
+    "D102",     # Missing docstring in public method
+    "D103",     # Missing docstring in public function
+    "D104",     # Missing docstring in public package
+    "D107",     # Missing docstring in __init__
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "INP001",   # implicit-namespace-package
+    "S101",     # assert
+    "PLR0913",  # too-many-arguments
+    "PLR2004",  # magic-value-comparison
+    "S106",     # hardcoded-password-func-arg
+    "S105",     # hardcoded-password-string
+    "D",        # docstring
+]
