@@ -1,21 +1,6 @@
 from playwright.sync_api import Locator, Page, expect
 
 
-class GreetingPage:
-    def __init__(self, page: Page):
-        self.page = page
-        self.name_input = page.locator("#name")
-        self.set_name_button = page.locator("#set_name")
-        self.greeting_text = page.locator("#greeting")
-
-    def navigate(self) -> None:
-        self.page.goto("https://bwilczek.github.io/watir_pump_tutorial/greeter.html")
-
-    def greet(self, name: str) -> None:
-        self.name_input.fill(name)
-        self.set_name_button.click()
-
-
 class ToDoListItemComponent:
     def __init__(self, root: Locator):
         self.root = root
@@ -58,14 +43,6 @@ class MultiToDoListPage:
     def lists(self) -> dict[str, ToDoListComponent]:
         locators_list = [ToDoListComponent(tdl) for tdl in self.page.locator("xpath=//*[@role='todo_list']").all()]
         return {tdl.title.text_content(): tdl for tdl in locators_list}
-
-
-def test_has_title(page: Page) -> None:
-    app = GreetingPage(page)
-    app.navigate()
-    app.greet("Marzena")
-
-    expect(app.greeting_text).to_contain_text("Hello Marzena!")
 
 
 def test_multi_todo_lists(page: Page) -> None:
